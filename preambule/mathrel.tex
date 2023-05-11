@@ -1,0 +1,51 @@
+\usepackage{centernot}
+
+\newcommand*{\lappend}{\operatorname{++}}
+\newcommand*{\sminus}{-} % set minus
+\newcommand*{\qsep}{\ldotp} % separator between quantifier and predicate
+
+\newcommand*{\powerset}[1]{\mathcal{P} (#1)}
+\newcommand*{\powerfset}[1]{\mathcal{P}_{\mathsf{fin}} (#1)}
+\newcommand*{\defeq}{\overset{\scriptstyle\mathrm{def}}{=}}
+\newcommand*{\defiff}{\overset{\scriptstyle\mathrm{def}}{\iff}}
+\newcommand*{\assign}{\operatorname{\vcentcolon=}}
+\newcommand{\irange}[2]{#1 \mathinner{\ldotp\ldotp} #2}
+\newcommand*{\pto}{\hookrightarrow}
+%\newcommand*{\pto}{\mathrel{\ooalign{\hfil$\mapstochar\mkern5mu$\hfil\cr$\to$\cr}}}
+
+% rel (partial) equivalence relation
+\newcommand*{\releq}{\overset{\scriptstyle\mathsf{rel}}{\simeq}}
+\newcommand*{\rel}{\overset{\scriptstyle\mathsf{rel}}{\sim}}
+\newcommand*{\nrel}{\overset{\scriptstyle\mathsf{rel}}{\nsim}}
+
+% tran (partial) equivalence relation
+\newcommand*{\traneq}{\overset{\scriptstyle\mathsf{tran}}{\simeq}}
+\newcommand*{\tran}{\overset{\scriptstyle\mathsf{tran}}{\sim}}
+\newcommand*{\ntran}{\overset{\scriptstyle\mathsf{tran}}{\nsim}}
+
+% program order disjoint union of total order
+\newcommand*{\po}{\overset{\scriptstyle\mathsf{po}}{\longrightarrow}}
+\newcommand*{\npo}{\centernot\po}
+
+% peer (partial) equivalence relation
+\newcommand*{\peereq}{\overset{\scriptstyle\mathsf{peer}}{\simeq}}
+\newcommand*{\peer}{\overset{\scriptstyle\mathsf{peer}}{\sim}}
+\newcommand*{\npeer}{\overset{\scriptstyle\mathsf{peer}}{\nsim}}
+
+% returns-before strict partial order
+\newcommand*{\rb}{\overset{\scriptstyle\mathsf{rb}}{\longrightarrow}}
+\newcommand*{\nrb}{\centernot\rb}
+
+% arbitration strict total order
+\newcommand*{\ar}{\overset{\scriptstyle\mathsf{ar}}{\longrightarrow}}
+
+% visibility acyclic relation
+\newcommand*{\vis}{\overset{\scriptstyle\mathsf{vis}}{\longrightarrow}}
+\newcommand*{\nvis}{\centernot\vis}
+\newcommand*{\viseq}{\leq_{\scriptstyle\mathsf{vis}}}
+\newcommand*{\nviseq}{\nleq_{\scriptstyle\mathsf{vis}}}
+
+% immediate dependency relation
+\newcommand*{\idr}{\downarrow}
+
+\newcommand\restr[2]{\ensuremath{\left.#1\right|_{#2}}}
