@@ -40,22 +40,21 @@
 % ---------
 
 \author{Victorien Elvinger}
-\title{Synql: Replicated Relational Databases and integrity maintenance}
+\title{Synql: A CRDT-based Approach for Replicated Relational Databases with Integrity Constraints}
 \institute{%
     \includegraphics[height=1.6em]{fig/logo-loria.pdf}\hspace{1.6em}%
     \includegraphics[height=1.6em]{fig/logo-ul.pdf}\hspace{1.6em}%
     \includegraphics[height=1.6em]{fig/logo-cnrs.pdf}\hspace{1.6em}%
     \includegraphics[height=1.6em]{fig/logo-inria.pdf}\hspace{1.6em}%
 }
-\date{February 2023}
+\date{June 2024}
 
 \begin{document}
 \maketitle
 
 \begin{frame}{Collaborative applications}
     \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{fig/collab-activity.pdf}
+        \includegraphics[width=0.9\textwidth]{fig/collab-activity.pdf}
     \end{minipage}
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
@@ -275,20 +274,6 @@
         \begin{compactitemize}
             \item app state is \textbf{derived fom the replicated state}
             \item leverage database schema for selecting \textbf{computation semantic}
-        \end{compactitemize}
-    \end{minipage}
-\end{frame}
-
-\begin{frame}{Compensation of app writes}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics<1>[height=.5\textheight]{fig/repl-state-uncompensated.drawio.pdf}%
-        \includegraphics<2>[height=.5\textheight]{fig/repl-state-compensated.drawio.pdf}%
-    \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item state computation can result in surprising effect on app writes
-            \item<2> \textbf{app writes must be compensated} for ensuring user intent
         \end{compactitemize}
     \end{minipage}
 \end{frame}
