@@ -108,18 +108,6 @@
     \end{minipage}
 \end{frame}
 
-\begin{frame}{Referential integrity in face of concurrencies}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics[height=.5\textheight]{fig/ref-violation.drawio.pdf}
-    \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item concurrent deletion and referencing of a row
-        \end{compactitemize}
-    \end{minipage}
-\end{frame}
-
 \begin{frame}{Replicating relational databases: already done?}
     \begin{minipage}[c][.55\textheight][t]{\textwidth}
         \centering
@@ -129,6 +117,18 @@
         \begin{compactitemize}
             \item \textbf{client-server} architecture
             \item \textbf{coordination} to maintain \textbf{data integrity}\footcite{bailis2013HighlyAvailableTransactions}
+        \end{compactitemize}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}{Referential integrity in face of coordination-less concurrencies}
+    \begin{minipage}[c][.55\textheight][t]{\textwidth}
+        \centering
+        \includegraphics[height=.5\textheight]{fig/ref-violation.drawio.pdf}
+    \end{minipage}
+    \begin{minipage}{\textwidth}
+        \begin{compactitemize}
+            \item concurrent deletion and referencing of a row
         \end{compactitemize}
     \end{minipage}
 \end{frame}
@@ -156,6 +156,25 @@
     \end{minipage}
 \end{frame}
 
+\begin{frame}{Strong convergence}
+    \begin{minipage}[c][.55\textheight][t]{\textwidth}
+        \centering
+        \vspace{4em}%
+        \includegraphics<1>[height=.2\textheight]{fig/sec-sync.drawio.pdf}%
+        \includegraphics<2>[height=.2\textheight]{fig/sec-convergent.drawio.pdf}
+    \end{minipage}
+    \begin{minipage}{\textwidth}
+        \begin{compactitemize}
+            \item property enforced by CRDTs\footcite{crdt2011shapiro}
+            \item advantages:
+            \begin{compactitemize}
+                \item \textbf{low latency}
+                \item \textbf{no flickering}
+            \end{compactitemize}
+        \end{compactitemize}
+    \end{minipage}
+\end{frame}
+
 \begin{frame}{Referential integrity maintenance - state of the art}
     \begin{minipage}[c][.55\textheight][t]{\textwidth}
         \centering
@@ -178,25 +197,6 @@
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
             \item the \emph{game} should be restored
-        \end{compactitemize}
-    \end{minipage}
-\end{frame}
-
-\begin{frame}{Strong convergence}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \vspace{4em}%
-        \includegraphics<1>[height=.2\textheight]{fig/sec-sync.drawio.pdf}%
-        \includegraphics<2>[height=.2\textheight]{fig/sec-convergent.drawio.pdf}
-    \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item property enforced by CRDTs\footcite{crdt2011shapiro}
-            \item advantages:
-            \begin{compactitemize}
-                \item \textbf{low latency}
-                \item \textbf{no flickering}
-            \end{compactitemize}
         \end{compactitemize}
     \end{minipage}
 \end{frame}
