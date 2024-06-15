@@ -39,7 +39,7 @@
 % Meta-data
 % ---------
 
-\author{Victorien Elvinger}
+\author{Victorien Elvinger, Claudia-Lavinia Ignat, Habibatou Ba\newline Inria Nancy, France}
 \title{Synql: A CRDT-based Approach for Replicated Relational Databases with Integrity Constraints}
 \institute{%
     \includegraphics[height=2em]{fig/logo-loria.pdf}\hspace{2em}%
@@ -81,10 +81,7 @@
     \end{minipage}
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
-            \item replicate the application?
-            \begin{compactitemize}
-                \item require dedicated development
-            \end{compactitemize}
+            \item replicate the application $\implies$ dedicated development
             \item<2-> \textbf{replicate the application data}\only<2->{\footcite{kleppmann2019localFirstSoft}}
             \item<3> SQLite is embedded in many applications
         \end{compactitemize}
@@ -142,9 +139,6 @@
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
             \item Git-like \textbf{coordination-less} replication of relational databases\footcite{yu2020replicatedrelations}
-            \begin{compactitemize}
-                \item based on Conflict-free Replicated Data Types (CRDTs)
-            \end{compactitemize}
             \item can \textbf{break data integrity and user intent}
             \item \textbf{not Strongly Convergent}
         \end{compactitemize}
@@ -317,7 +311,7 @@
     \end{minipage}
     \begin{minipage}{\textwidth}
         \centering
-        \ccby\hspace{3pt}4.0
+        Victorien Elvinger\hspace{.5em}\ccby\hspace{3pt}4.0
     \end{minipage}
 \end{frame}
 \end{document}

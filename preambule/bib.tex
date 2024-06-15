@@ -1,3 +1,13 @@
 \usepackage[backend=biber,defernumbers=true,bibstyle=trad-plain,citestyle=authortitle,sorting=none,maxbibnames=1,maxcitenames=1,]{biblatex}
 
 \addbibresource{ref.bib}
+\usepackage{xpatch}
+\xpatchbibmacro{cite}
+  {\usebibmacro{cite:title}}
+  {\usebibmacro{cite:title}%
+  \setunit{\addcomma\space}%
+  \usebibmacro{booktitle}%
+  \setunit{\addcomma\space}%
+  \usebibmacro{date}}
+  {}
+  {}
