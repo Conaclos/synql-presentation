@@ -42,10 +42,10 @@
 \author{Victorien Elvinger, Claudia-Lavinia Ignat, Habibatou Ba\newline Inria Nancy, France}
 \title{Synql: A CRDT-based Approach for Replicated Relational Databases with Integrity Constraints}
 \institute{%
-    \includegraphics[height=2em]{fig/logo-loria.pdf}\hspace{2em}%
-    \includegraphics[height=2em]{fig/logo-ul.pdf}\hspace{2em}%
-    \includegraphics[height=2em]{fig/logo-cnrs.pdf}\hspace{2em}%
-    \includegraphics[height=2em]{fig/logo-inria.pdf}\hspace{2em}%
+    \includegraphics[height=3em]{fig/logo-loria.pdf}\hspace{3em}%
+    \includegraphics[height=3em]{fig/logo-ul.pdf}\hspace{3em}%
+    \includegraphics[height=3em]{fig/logo-cnrs.pdf}\hspace{3em}%
+    \includegraphics[height=3em]{fig/logo-inria.pdf}\hspace{3em}%
 }
 \date{June 2024}
 
@@ -54,19 +54,20 @@
 
 \begin{frame}{Adding collaborative features to applications}
     \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \includegraphics[width=0.9\textwidth]{fig/collab-activity.pdf}
+        \includegraphics<1>[height=.5\textheight]{fig/collab-activity.drawio.pdf}
+        \includegraphics<2>[height=.5\textheight]{fig/collab-activity-offline.drawio.pdf}
     \end{minipage}
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
-            \item several persons \textbf{modify together} a shared content
+            \item several users \textbf{modify together} a shared content
             \begin{compactitemize}
                 \item located at \textbf{different places}
                 \item \textbf{simultaneous} modifications or at \textbf{distinct time}
             \end{compactitemize}
             \item adding collaborative features to applications is hard
             \begin{compactitemize}
-                \item \textbf{sequential $\to$ concurrent} modifications
-                \item \textbf{offline support}
+                \item \textbf{sequential to concurrent} modifications
+                \item<2> \textbf{offline support}
             \end{compactitemize}
         \end{compactitemize}
     \end{minipage}
@@ -77,29 +78,34 @@
         \centering
         \includegraphics<1>[width=.7\textwidth]{fig/app-sync.drawio.pdf}%
         \includegraphics<2>[width=.7\textwidth]{fig/app-data-sync.drawio.pdf}%
-        \includegraphics<3>[width=.7\textwidth]{fig/app-db-sync.drawio.pdf}
+        \includegraphics<3>[width=.7\textwidth]{fig/app-db-sync.drawio.pdf}%
     \end{minipage}
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
             \item replicate the application $\implies$ dedicated development
             \item<2-> \textbf{replicate the application data}\only<2->{\footcite{kleppmann2019localFirstSoft}}
-            \item<3> SQLite is embedded in many applications
+            \item<3> many applications embed a relational database
         \end{compactitemize}
     \end{minipage}
 \end{frame}
 
-\begin{frame}{Referential integrity}
+\begin{frame}{Relational databases and integrity constraints}
     \begin{minipage}[c][.55\textheight][t]{\textwidth}
         \centering
-        \includegraphics{fig/fk.drawio.pdf}
+        \includegraphics<1>[height=.5\textheight]{fig/relation-formalism.drawio.pdf}%
+        \includegraphics<2>[height=.5\textheight]{fig/uniqueness.drawio.pdf}%
+        \includegraphics<3>[height=.5\textheight]{fig/references.drawio.pdf}%
+        \includegraphics<4>[height=.5\textheight]{fig/del-cascade.drawio.pdf}%
+        \includegraphics<5>[height=.5\textheight]{fig/del-abort.drawio.pdf}%
     \end{minipage}
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
-            \item ensure that the \textbf{target of a reference exists}
-            \item the deletion of a reference target can result in
+            \item<2-> uniqueness integrity: relation's tuples are \textbf{uniquely identified}
+            \item<3-> referential integrity: \textbf{target of a reference exists}
+            \item<4-> the deletion of a reference target can result in
             \begin{compactitemize}
-                \item the \textbf{abortion of the deletion}
-                \item the \textbf{propagation of the deletion} to the reference source
+                \item<4-> the \textbf{cascading of the deletion} to the reference source
+                \item<5-> the \textbf{abortion of the deletion}
             \end{compactitemize}
         \end{compactitemize}
     \end{minipage}
@@ -114,18 +120,6 @@
         \begin{compactitemize}
             \item \textbf{client-server} architecture
             \item \textbf{coordination} to maintain \textbf{data integrity}\footcite{bailis2013HighlyAvailableTransactions}
-        \end{compactitemize}
-    \end{minipage}
-\end{frame}
-
-\begin{frame}{Referential integrity in face of coordination-less concurrencies}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics[height=.5\textheight]{fig/ref-violation.drawio.pdf}
-    \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item concurrent deletion and referencing of a row
         \end{compactitemize}
     \end{minipage}
 \end{frame}
@@ -159,7 +153,8 @@
     \end{minipage}
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
-            \item property enforced by CRDTs\footcite{crdt2011shapiro}
+            \item if two devices integrate the same modifications,\\
+            then they converge to an identical state\footcite{crdt2011shapiro}
             \item advantages:
             \begin{compactitemize}
                 \item \textbf{low latency}
@@ -169,30 +164,10 @@
     \end{minipage}
 \end{frame}
 
-\begin{frame}{Referential integrity maintenance - state of the art}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics[height=.5\textheight]{fig/ref-ipa-issue.drawio.pdf}
-    \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item writes are compensated\footcite{balegas2018ipa} in order to ensure integrity
-            \item the \emph{contest} is restored
-            \item however, the \emph{game} is not restored
-        \end{compactitemize}
-    \end{minipage}
-\end{frame}
-
-\begin{frame}{Referential integrity maintenance - desired output}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics[height=.5\textheight]{fig/ref-synql.drawio.pdf}
-    \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item the \emph{game} should be restored
-        \end{compactitemize}
-    \end{minipage}
+\begin{frame}{Data integrity in face of coordination-less concurrencies}
+    \centering
+    \includegraphics<1>[height=.95\textheight]{fig/uniqueness-violation.drawio.pdf}
+    \includegraphics<2>[height=.95\textheight]{fig/ref-violation.drawio.pdf}
 \end{frame}
 
 \begin{frame}[plain,standout]
@@ -202,94 +177,96 @@
 \begin{frame}{Architecture overview}
     \begin{minipage}[c][.55\textheight][t]{\textwidth}
         \centering
-        \includegraphics[height=.5\textheight]{fig/synql-overview.drawio.pdf}
+        \includegraphics[width=\textwidth]{fig/synql-high-overview.drawio}
     \end{minipage}
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
             \item app read without overhead
             \item an app write triggers replicated state update
             \item push / pull in background
-            \item a pull merges the received state and computes app state
+            \item a pull merges the received state and updates the app state
         \end{compactitemize}
     \end{minipage}
+\end{frame}
+
+\begin{frame}{Conflict-free Replicated Data Types\footcite{crdt2011shapiro} (CRDTs)}
+    \begin{minipage}[c][.3\textheight][t]{\textwidth}
+        \begin{compactitemize}
+            \item CRDTs allow concurrent edits without coordination
+            \item specified as Adbstarct Data Types with a \textbf{merge function}
+            \item enforce \textbf{Strong Convergence}
+        \end{compactitemize}
+    \end{minipage}
+    \only<1-2>{\begin{minipage}[l][.55\textheight][t]{.49\textwidth}
+        \includegraphics<1>[height=.45\textheight]{fig/clflag-spec.drawio.pdf}%
+        \includegraphics<2>[height=.45\textheight]{fig/clflag-repr.drawio.pdf}%
+    \end{minipage}
+    \begin{minipage}[c][.55\textheight][t]{.5\textwidth}
+        \begin{align}
+            \trm{CLFlag} &\defeq \mathbb{N}_0\\
+            \trm{read}(n) &\defeq \trm{isOdd}(n)\\
+            \trm{toggle}(n) &\defeq n+1\\
+            n \sqcup n' &\defeq max(n, n')
+        \end{align}
+    \end{minipage}}%
+    \only<3>{\begin{minipage}[l][.55\textheight][t]{.38\textwidth}
+        \includegraphics[height=.45\textheight]{fig/lwwreg.drawio.pdf}%
+    \end{minipage}
+    \begin{minipage}[c][.55\textheight][t]{.61\textwidth}
+        \centering
+        \begin{align}
+            \trm{LWWReg} &\defeq \trm{Value} \times \trm{Ts}\\
+            \trm{read}(\tuple{v, t}) &\defeq v\\
+            \trm{write}(v) &\defeq \tuple{v, \trm{new\_ts}}\\
+            \tuple{v, t} \sqcup \tuple{v', t'} &\defeq \begin{cases}
+              \tuple{v, t} \when t > t'\\
+              \tuple{v', t'}\\
+            \end{cases}\
+        \end{align}
+    \end{minipage}}
 \end{frame}
 
 \begin{frame}{Replicated state: composing CRDTs}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
+    \begin{minipage}[c][.45\textheight][t]{\textwidth}
         \centering
-        \includegraphics<1>[height=.5\textheight]{fig/repl-primitives.drawio.pdf}%
-        \includegraphics<2>[height=.5\textheight]{fig/repl-primitives-flag.drawio.pdf}%
+        \includegraphics[width=\textwidth]{fig/repl-state-spec.drawio.pdf}
     \end{minipage}
     \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item \textbf{globally unique and monotonic timestamps}
-            \begin{compactitemize}
-                \item monotonic: greater than previously observed timestamps
-            \end{compactitemize}
-            \item Last-Writer-Win (LWW) Register\footcite{Johnson1975MaintenanceOfDuplicatedDatabase} \textbf{keeps the newest value}
-            \item state of CLFlag computed from the \textbf{longest chain}
-        \end{compactitemize}
+        \only<1>{\begin{compactitemize}
+            \item the composition\footcite{baquero2017crdtcomposition} of CRDTs form a new CRDT
+            \item timestamps (Ts) are \textbf{monotonic} and \textbf{globally unique}
+        \end{compactitemize}}
+        \includegraphics<2>[height=.48\textheight]{fig/repl-state.drawio.pdf}
     \end{minipage}
 \end{frame}
 
-\begin{frame}{Replicated state: composing CRDTs}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics[height=.5\textheight]{fig/repl-state.drawio.pdf}
-    \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item \textbf{timestamps as row identifiers}
-            \item a CL-Flag indicates if a row is removed
-            \item a replicated attribute is a LWW-Register
-            \item row identifiers as values of foreign keys
-        \end{compactitemize}
-    \end{minipage}
+\begin{frame}{Composing CRDTs is not sufficient}
+    \centering
+    \includegraphics[width=\textwidth]{fig/repl-state-integrity-violation.drawio.pdf}
 \end{frame}
 
-\begin{frame}{Replicated state: composing CRDTs}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics[height=.5\textheight]{fig/repl-state-merge.drawio.pdf}
+\begin{frame}{Computing a state that ensures data integrity}
+    \begin{minipage}[c][.75\textheight][t]{\textwidth}
+        \includegraphics[width=\textwidth]{fig/computed-state.drawio.pdf}
     \end{minipage}
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
-            \item the replicated state encodes only the app write
-        \end{compactitemize}
-    \end{minipage}
-\end{frame}
-
-\begin{frame}{Compute app state from replicated state}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics[height=.5\textheight]{fig/repl-state-compute.drawio.pdf}
-    \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item app state is \textbf{derived fom the replicated state}
+            \item \textbf{derived from the replicated state}
             \item leverage database schema for selecting \textbf{computation semantic}
         \end{compactitemize}
     \end{minipage}
 \end{frame}
 
-\begin{frame}{Compensation of app writes}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
-        \centering
-        \includegraphics<1>[height=.5\textheight]{fig/repl-state-uncompensated.drawio.pdf}%
-        \includegraphics<2>[height=.5\textheight]{fig/repl-state-compensated.drawio.pdf}%
-    \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{compactitemize}
-            \item state computation can result in surprising effect on app writes
-            \item<2> \textbf{app writes must be compensated} for ensuring user intent
-        \end{compactitemize}
-    \end{minipage}
+\begin{frame}{What you see is what you compute}
+    \includegraphics<1>[width=\textwidth]{fig/wysiwyg.drawio.pdf}
+    \includegraphics<2>[width=\textwidth]{fig/uncompensated.drawio.pdf}
+    \includegraphics<3>[width=\textwidth]{fig/compensated.drawio.pdf}
 \end{frame}
 
 \begin{frame}{Conclusions}
-    \begin{minipage}[c][.55\textheight][t]{\textwidth}
+    \begin{minipage}[c][.6\textheight][t]{\textwidth}
         \centering
-        \includegraphics[height=.5\textheight]{fig/synql-overview.drawio.pdf}
+        \includegraphics[width=\textwidth]{fig/synql-overview.drawio.pdf}
     \end{minipage}
     \begin{minipage}{\textwidth}
         \begin{compactitemize}
@@ -315,3 +292,43 @@
     \end{minipage}
 \end{frame}
 \end{document}
+
+\appendix
+
+\begin{frame}{Replicated state: composing CRDTs}
+    \begin{minipage}[c][.55\textheight][t]{\textwidth}
+        \centering
+        \includegraphics[height=.5\textheight]{fig/repl-state-merge.drawio.pdf}
+    \end{minipage}
+    \begin{minipage}{\textwidth}
+        \begin{compactitemize}
+            \item the replicated state encodes only the app write
+        \end{compactitemize}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}{Referential integrity maintenance - state of the art}
+    \begin{minipage}[c][.55\textheight][t]{\textwidth}
+        \centering
+        \includegraphics[height=.5\textheight]{fig/ref-ipa-issue.drawio.pdf}
+    \end{minipage}
+    \begin{minipage}{\textwidth}
+        \begin{compactitemize}
+            \item writes are compensated\footcite{balegas2018ipa} to ensure referential integrity
+            \item the \emph{contest} is restored
+            \item however, the \emph{game} is not restored
+        \end{compactitemize}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}{Referential integrity maintenance - desired output}
+    \begin{minipage}[c][.55\textheight][t]{\textwidth}
+        \centering
+        \includegraphics[height=.5\textheight]{fig/ref-synql.drawio.pdf}
+    \end{minipage}
+    \begin{minipage}{\textwidth}
+        \begin{compactitemize}
+            \item the \emph{game} should be restored
+        \end{compactitemize}
+    \end{minipage}
+\end{frame}
